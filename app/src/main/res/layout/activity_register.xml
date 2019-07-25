@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="false"
+    tools:context=".activity.RegisterActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_gravity="top"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="REGISTER WITH US"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:fontFamily="@font/sans_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/sans_regular"
+                android:gravity="left"
+                android:text="Name *"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <com.libizo.CustomEditText
+                android:id="@+id/reg_et_name"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:libIZO_clearIconTint="#000000"
+                app:libIZO_setBorderColor="#50000000"
+                app:libIZO_setBorderView="true"
+                app:libIZO_setClearIconVisible="true"
+                app:libIZO_setCornerRadius="50dp"
+                app:libIZO_setFont="@string/s_regular"
+                app:libIZO_setStrokeWidth="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/sans_regular"
+                android:gravity="left"
+                android:text="Mobile No *"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <com.libizo.CustomEditText
+                android:id="@+id/reg_et_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:libIZO_clearIconTint="#000000"
+                app:libIZO_setBorderColor="#50000000"
+                app:libIZO_setBorderView="true"
+                app:libIZO_setClearIconVisible="true"
+                app:libIZO_setCornerRadius="50dp"
+                app:libIZO_setFont="@string/s_regular"
+                app:libIZO_setStrokeWidth="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/sans_regular"
+                android:gravity="left"
+                android:text="Email *"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <com.libizo.CustomEditText
+                android:id="@+id/reg_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:libIZO_clearIconTint="#000000"
+                app:libIZO_setBorderColor="#50000000"
+                app:libIZO_setBorderView="true"
+                app:libIZO_setClearIconVisible="true"
+                app:libIZO_setCornerRadius="50dp"
+                app:libIZO_setFont="@string/s_regular"
+                app:libIZO_setStrokeWidth="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/sans_regular"
+                android:gravity="left"
+                android:text="Password *"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <com.libizo.CustomEditText
+                android:id="@+id/reg_et_pass"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:libIZO_clearIconTint="#000000"
+                app:libIZO_setBorderColor="#50000000"
+                app:libIZO_setBorderView="true"
+                app:libIZO_setClearIconVisible="true"
+                app:libIZO_setCornerRadius="50dp"
+                app:libIZO_setFont="@string/s_regular"
+                app:libIZO_setStrokeWidth="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/sans_regular"
+                android:gravity="left"
+                android:text="Confirm Password *"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <com.libizo.CustomEditText
+                android:id="@+id/reg_et_cpass"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:libIZO_clearIconTint="#000000"
+                app:libIZO_setBorderColor="#50000000"
+                app:libIZO_setBorderView="true"
+                app:libIZO_setClearIconVisible="true"
+                app:libIZO_setCornerRadius="50dp"
+                app:libIZO_setFont="@string/s_regular"
+                app:libIZO_setStrokeWidth="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/sans_regular"
+                android:gravity="left"
+                android:text="Language *"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/reg_spin_language"
+                style="@style/spinner_style"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/sans_regular"
+                android:gravity="left"
+                android:text="Category *"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/reg_spin_category"
+                style="@style/spinner_style"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/prof_spin_layout"
+            android:weightSum="15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout12">
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Profession *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <Spinner
+                    style="@style/spinner_style"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:id="@+id/reg_spin_profession"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Facebook ID (Optional)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.libizo.CustomEditText
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:imeOptions="actionNext"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:inputType="text"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_fb"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="50dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Date of Birth *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:background="@drawable/round_spinner"
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:padding="10dp"
+                        android:layout_weight="0.3"
+                        android:id="@+id/reg_tv_dob"
+                        android:textSize="16sp"
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/sans_regular"/>
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:id="@+id/reg_dob"
+                        android:layout_weight="1.7"
+                        android:background="@null"
+                        android:src="@drawable/ic_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Gender *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <Spinner
+                    style="@style/spinner_style"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:id="@+id/reg_spin_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Qualification *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.libizo.CustomEditText
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:imeOptions="actionNext"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:inputType="text"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_qualify"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="50dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Address *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.libizo.CustomEditText
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:imeOptions="actionNext"
+                    android:layout_margin="5dp"
+                    android:gravity="top|left"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:inputType="textMultiLine"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_address"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="40dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="State *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.libizo.CustomEditText
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:imeOptions="actionNext"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:inputType="text"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_state"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="50dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Favourite Actor (Optional)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.libizo.CustomEditText
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:imeOptions="actionNext"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:inputType="text"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_actor"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="50dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Industry *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <Spinner
+                    style="@style/spinner_style"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:id="@+id/reg_spin_industry"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Upload Profile Picture *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:background="@drawable/round_spinner"
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:padding="10dp"
+                        android:layout_weight="0.3"
+                        android:id="@+id/reg_tv_pic"
+                        android:textSize="16sp"
+                        android:layout_margin="5dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/sans_regular"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"/>
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:id="@+id/reg_upload_pic"
+                        android:layout_weight="1.7"
+                        android:background="@null"
+                        android:src="@drawable/ic_upload"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/reg_uploaded_pic"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_uploaded"
+                        android:layout_weight="1.7"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Upload Bio Data *"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:background="@drawable/round_spinner"
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:padding="10dp"
+                        android:layout_weight="0.3"
+                        android:id="@+id/reg_tv_cv"
+                        android:textSize="16sp"
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/sans_regular"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"/>
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:id="@+id/reg_upload_cv"
+                        android:layout_weight="1.7"
+                        android:background="@null"
+                        android:src="@drawable/ic_upload"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/reg_uploaded_cv"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_uploaded"
+                        android:layout_weight="1.7"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Upload Audio (Optional)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:background="@drawable/round_spinner"
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:padding="10dp"
+                        android:layout_weight="0.3"
+                        android:id="@+id/reg_tv_audio"
+                        android:textSize="16sp"
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/sans_regular"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"/>
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:id="@+id/reg_upload_audio"
+                        android:layout_weight="1.7"
+                        android:background="@null"
+                        android:src="@drawable/ic_upload"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/reg_uploaded_audio"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_uploaded"
+                        android:layout_weight="1.7"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Upload Video (Optional)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.libizo.CustomEditText
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:autoLink="web"
+                    android:imeOptions="actionNext"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:inputType="text"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_video"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="50dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="Previous Achievements (Optional)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.libizo.CustomEditText
+                    android:drawableEnd="@drawable/ic_upload"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:imeOptions="actionNext"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_achieve"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="30dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="left"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:textColor="#000000"
+                    android:text="About Yourself (Optional)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.libizo.CustomEditText
+                    android:drawableEnd="@drawable/ic_upload"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:imeOptions="actionDone"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_yourself"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="30dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout13"
+            android:layout_gravity="center"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/prof_spin_layout">
+
+            <CheckBox
+                android:buttonTint="#228B22"
+                android:id="@+id/reg_cb_term"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:paddingRight="2dp"
+                    android:text="Accept our"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/sans_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingLeft="2dp"
+                    android:id="@+id/reg_tv_term"
+                    android:text="Terms &amp; Conditions"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="@font/sans_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout14"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
+
+            <Button
+                android:id="@+id/reg_btn_register"
+                android:text="SIGN UP"
+                android:textSize="20sp"
+                android:fontFamily="@font/sans_bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/round_colored_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sans_regular"
+                android:padding="10dp"
+                android:text="Already Registered User ?"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/reg_tv_click"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sans_bold"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Click Here"
+                android:textColor="@color/colorSuccess"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
