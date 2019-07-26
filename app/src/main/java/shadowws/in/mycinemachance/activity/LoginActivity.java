@@ -82,12 +82,10 @@ public class LoginActivity extends AppCompatActivity implements Connection.Recei
         if (!checkNullOrEmpty(mobile) && !checkNullOrEmpty(password)){
 
             etMobile.setText(mobile);
-            etPass.setText(password);
 
         }else {
 
             etMobile.setText("");
-            etPass.setText("");
         }
 
         tvSwitch.setText("MEMBER");
@@ -400,7 +398,7 @@ public class LoginActivity extends AppCompatActivity implements Connection.Recei
                         .setTitle("Validation Error :")
                         .setTitleAppearance(R.style.AlertTextAppearance_Title)
                         .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                        .setText("Mobile No & Password Feilds are Empty")
+                        .setText("Mandatory Feilds are Empty")
                         .setTextAppearance(R.style.AlertTextAppearance_Text)
                         .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
                         .setIcon(R.drawable.ic_info)

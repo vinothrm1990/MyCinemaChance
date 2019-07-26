@@ -1,11 +1,13 @@
 package shadowws.in.mycinemachance.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -25,20 +27,26 @@ import com.libizo.CustomEditText;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.tapadoo.alerter.Alerter;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import shadowws.in.mycinemachance.R;
 import shadowws.in.mycinemachance.other.Connection;
+import shadowws.in.mycinemachance.other.FilePath;
 import shadowws.in.mycinemachance.other.MCC;
 import shadowws.in.mycinemachance.response.DirectorLoginResponse;
 import shadowws.in.mycinemachance.response.DirectorRegisterResponse;
 import shadowws.in.mycinemachance.response.MemberRegisterResponse;
+import shadowws.in.mycinemachance.response.UploadResponse;
 import shadowws.in.mycinemachance.retrofit.RetrofitAPI;
 import shadowws.in.mycinemachance.retrofit.RetrofitBASE;
 import thebat.lib.validutil.ValidUtils;
@@ -788,7 +796,10 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
 
         }else {
 
-
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_PICK);
+            startActivityForResult(Intent.createChooser(intent, ""), PIC_REQUEST);
         }
     }
 
@@ -810,7 +821,10 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
 
         }else {
 
-
+            Intent intent = new Intent();
+            intent.setType("*/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, ""), CV_REQUEST);
         }
     }
 
@@ -832,8 +846,441 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
 
         }else {
 
-
+            Intent intent = new Intent();
+            intent.setType("audio/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, ""), AUDIO_REQUEST);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        try {
+
+            if (requestCode == PIC_REQUEST && resultCode == RESULT_OK && null != data) {
+
+                Uri selectedImage = data.getData();
+                filePath = FilePath.getPath(this, selectedImage);
+                picPath = filePath.substring(filePath.lastIndexOf("/")+1);
+                tvPic.setText(picPath);
+                tvPic.setSelected(true);
+
+                uploadPicture(filePath);
+
+            }else if (requestCode == CV_REQUEST && resultCode == RESULT_OK && null != data){
+
+                Uri selectedDocument = data.getData();
+                filePath = FilePath.getPath(this, selectedDocument);
+                cvPath = filePath.substring(filePath.lastIndexOf("/")+1);
+                tvCv.setText(cvPath);
+                tvCv.setSelected(true);
+
+                uploadResume(filePath);
+
+            }else if (requestCode == AUDIO_REQUEST && resultCode == RESULT_OK && null != data){
+
+                Uri selectedAudio = data.getData();
+                filePath = FilePath.getPath(this, selectedAudio);
+                audioPath = filePath.substring(filePath.lastIndexOf("/")+1);
+                tvAudio.setText(audioPath);
+                tvAudio.setSelected(true);
+
+                uploadAudio(filePath);
+            }
+
+        }catch (Exception e){
+
+            Alerter.create(RegisterActivity.this)
+                    .setTitle("Connection Error :")
+                    .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                    .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                    .setText(e.getMessage())
+                    .setTextAppearance(R.style.AlertTextAppearance_Text)
+                    .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                    .setIcon(R.drawable.ic_info)
+                    .setIconColorFilter(0)
+                    .setBackgroundColorRes(R.color.colorError)
+                    .show();
+        }
+    }
+
+    private void uploadPicture(String filePath) {
+
+        File file = new File(filePath);
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        progress.startLoadingJIGB(RegisterActivity.this, R.raw.progress, "Please Wait...", 0,500,300);
+
+        RetrofitAPI api = RetrofitBASE.getRetrofitInstance(RegisterActivity.this).create(RetrofitAPI.class);
+        Call<UploadResponse> call = api.uploadFile(fileToUpload, filename);
+
+        call.enqueue(new Callback<UploadResponse>() {
+            @Override
+            public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
+
+                try {
+
+                    if (response.isSuccessful()){
+
+                        UploadResponse data = response.body();
+
+                        if (data != null){
+
+                            boolean error = data.getError();
+                            String message = data.getMessage();
+
+                            if (error == false){
+
+                                progress.finishLoadingJIGB(RegisterActivity.this);
+                                Alerter.create(RegisterActivity.this)
+                                        .setTitle("Response Success :")
+                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                        .setText(message)
+                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                        .setIcon(R.drawable.ic_info)
+                                        .setIconColorFilter(0)
+                                        .setBackgroundColorRes(R.color.colorSuccess)
+                                        .show();
+
+                                ibtnPic.setVisibility(View.GONE);
+                                ivPicUploded.setVisibility(View.VISIBLE);
+
+                            }else {
+
+                                progress.finishLoadingJIGB(RegisterActivity.this);
+                                Alerter.create(RegisterActivity.this)
+                                        .setTitle("Response Error :")
+                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                        .setText(message)
+                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                        .setIcon(R.drawable.ic_info)
+                                        .setIconColorFilter(0)
+                                        .setBackgroundColorRes(R.color.colorError)
+                                        .show();
+                            }
+
+                        }else {
+
+                            progress.finishLoadingJIGB(RegisterActivity.this);
+                            Alerter.create(RegisterActivity.this)
+                                    .setTitle("Null Exception :")
+                                    .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                    .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                    .setText("No Data")
+                                    .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                    .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                    .setIcon(R.drawable.ic_info)
+                                    .setIconColorFilter(0)
+                                    .setBackgroundColorRes(R.color.colorError)
+                                    .show();
+                        }
+                    }
+
+                }catch (Exception e){
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    Alerter.create(RegisterActivity.this)
+                            .setTitle("Exception Caught :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText(e.toString())
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorError)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadResponse> call, Throwable t) {
+
+                if (t.getMessage().equalsIgnoreCase("connect timed out")){
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    call.cancel();
+                    uploadPicture(filePath);
+
+                }else {
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    call.cancel();
+                    Alerter.create(RegisterActivity.this)
+                            .setTitle("Exception Throwed :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText(t.toString())
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorError)
+                            .show();
+                }
+
+            }
+        });
+    }
+
+    private void uploadResume(String filePath) {
+
+        File file = new File(filePath);
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        progress.startLoadingJIGB(RegisterActivity.this, R.raw.progress, "Please Wait...", 0,500,300);
+
+        RetrofitAPI api = RetrofitBASE.getRetrofitInstance(RegisterActivity.this).create(RetrofitAPI.class);
+        Call<UploadResponse> call = api.uploadFile(fileToUpload, filename);
+
+        call.enqueue(new Callback<UploadResponse>() {
+            @Override
+            public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
+
+                try {
+
+                    if (response.isSuccessful()){
+
+                        UploadResponse data = response.body();
+
+                        if (data != null){
+
+                            boolean error = data.getError();
+                            String message = data.getMessage();
+
+                            if (error == false){
+
+                                progress.finishLoadingJIGB(RegisterActivity.this);
+                                Alerter.create(RegisterActivity.this)
+                                        .setTitle("Response Success :")
+                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                        .setText(message)
+                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                        .setIcon(R.drawable.ic_info)
+                                        .setIconColorFilter(0)
+                                        .setBackgroundColorRes(R.color.colorSuccess)
+                                        .show();
+
+                                ibtnCv.setVisibility(View.GONE);
+                                ivCvUploaded.setVisibility(View.VISIBLE);
+
+                            }else {
+
+                                progress.finishLoadingJIGB(RegisterActivity.this);
+                                Alerter.create(RegisterActivity.this)
+                                        .setTitle("Response Error :")
+                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                        .setText(message)
+                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                        .setIcon(R.drawable.ic_info)
+                                        .setIconColorFilter(0)
+                                        .setBackgroundColorRes(R.color.colorError)
+                                        .show();
+                            }
+
+                        }else {
+
+                            progress.finishLoadingJIGB(RegisterActivity.this);
+                            Alerter.create(RegisterActivity.this)
+                                    .setTitle("Null Exception :")
+                                    .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                    .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                    .setText("No Data")
+                                    .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                    .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                    .setIcon(R.drawable.ic_info)
+                                    .setIconColorFilter(0)
+                                    .setBackgroundColorRes(R.color.colorError)
+                                    .show();
+                        }
+                    }
+
+                }catch (Exception e){
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    Alerter.create(RegisterActivity.this)
+                            .setTitle("Exception Caught :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText(e.toString())
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorError)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadResponse> call, Throwable t) {
+
+                if (t.getMessage().equalsIgnoreCase("connect timed out")){
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    call.cancel();
+                    uploadResume(filePath);
+
+                }else {
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    call.cancel();
+                    Alerter.create(RegisterActivity.this)
+                            .setTitle("Exception Throwed :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText(t.toString())
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorError)
+                            .show();
+                }
+
+            }
+        });
+    }
+
+    private void uploadAudio(String filePath) {
+
+        File file = new File(filePath);
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        progress.startLoadingJIGB(RegisterActivity.this, R.raw.progress, "Please Wait...", 0,500,300);
+
+        RetrofitAPI api = RetrofitBASE.getRetrofitInstance(RegisterActivity.this).create(RetrofitAPI.class);
+        Call<UploadResponse> call = api.uploadFile(fileToUpload, filename);
+
+        call.enqueue(new Callback<UploadResponse>() {
+            @Override
+            public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
+
+                try {
+
+                    if (response.isSuccessful()){
+
+                        UploadResponse data = response.body();
+
+                        if (data != null){
+
+                            boolean error = data.getError();
+                            String message = data.getMessage();
+
+                            if (error == false){
+
+                                progress.finishLoadingJIGB(RegisterActivity.this);
+                                Alerter.create(RegisterActivity.this)
+                                        .setTitle("Response Success :")
+                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                        .setText(message)
+                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                        .setIcon(R.drawable.ic_info)
+                                        .setIconColorFilter(0)
+                                        .setBackgroundColorRes(R.color.colorSuccess)
+                                        .show();
+
+                                ibtnAudio.setVisibility(View.GONE);
+                                ivAudioUploaded.setVisibility(View.VISIBLE);
+
+                            }else {
+
+                                progress.finishLoadingJIGB(RegisterActivity.this);
+                                Alerter.create(RegisterActivity.this)
+                                        .setTitle("Response Error :")
+                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                        .setText(message)
+                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                        .setIcon(R.drawable.ic_info)
+                                        .setIconColorFilter(0)
+                                        .setBackgroundColorRes(R.color.colorError)
+                                        .show();
+                            }
+
+                        }else {
+
+                            progress.finishLoadingJIGB(RegisterActivity.this);
+                            Alerter.create(RegisterActivity.this)
+                                    .setTitle("Null Exception :")
+                                    .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                                    .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                                    .setText("No Data")
+                                    .setTextAppearance(R.style.AlertTextAppearance_Text)
+                                    .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                                    .setIcon(R.drawable.ic_info)
+                                    .setIconColorFilter(0)
+                                    .setBackgroundColorRes(R.color.colorError)
+                                    .show();
+                        }
+                    }
+
+                }catch (Exception e){
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    Alerter.create(RegisterActivity.this)
+                            .setTitle("Exception Caught :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText(e.toString())
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorError)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadResponse> call, Throwable t) {
+
+                if (t.getMessage().equalsIgnoreCase("connect timed out")){
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    call.cancel();
+                    uploadAudio(filePath);
+
+                }else {
+
+                    progress.finishLoadingJIGB(RegisterActivity.this);
+                    call.cancel();
+                    Alerter.create(RegisterActivity.this)
+                            .setTitle("Exception Throwed :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText(t.toString())
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorError)
+                            .show();
+                }
+
+            }
+        });
     }
 
     private void picture() {
@@ -875,4 +1322,5 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
         super.onResume();
         MCC.getInstance().setConnectivityListener(this);
     }
+
 }

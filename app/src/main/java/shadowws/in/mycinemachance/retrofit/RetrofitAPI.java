@@ -1,13 +1,24 @@
 package shadowws.in.mycinemachance.retrofit;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import shadowws.in.mycinemachance.response.DirectorDataResponse;
 import shadowws.in.mycinemachance.response.DirectorLoginResponse;
 import shadowws.in.mycinemachance.response.DirectorRegisterResponse;
+import shadowws.in.mycinemachance.response.GuestCategoryResponse;
+import shadowws.in.mycinemachance.response.GuestDataResponse;
 import shadowws.in.mycinemachance.response.MemberLoginResponse;
 import shadowws.in.mycinemachance.response.MemberRegisterResponse;
+import shadowws.in.mycinemachance.response.UploadResponse;
 
 public interface RetrofitAPI {
 
@@ -62,5 +73,25 @@ public interface RetrofitAPI {
             @Field("language") String language,
             @Field("category") String category,
             @Field("confirm") String confirm
+    );
+
+
+    @GET("guestdata")
+    Call<GuestDataResponse> guestData();
+
+    @GET("guestcategory")
+    Call<GuestCategoryResponse> guestCategory();
+
+    @Multipart
+    @POST("uploadfile")
+    Call<UploadResponse> uploadFile(
+            @Part MultipartBody.Part file,
+            @Part("file") RequestBody name
+    );
+
+    @FormUrlEncoded
+    @POST("allmembers")
+    Call<DirectorDataResponse> directorData(
+            @Field("page") int page
     );
 }
