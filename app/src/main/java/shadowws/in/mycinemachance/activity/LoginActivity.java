@@ -309,14 +309,13 @@ public class LoginActivity extends AppCompatActivity implements Connection.Recei
                                             String category = results.getCategory();
                                             String language = results.getLanguage();
 
-                                             /*Prefs.putBoolean("directorLoggedIn", true);
+                                            Prefs.putBoolean("directorLoggedIn", true);
                                             Prefs.putInt("lid", id);
-                                            Prefs.putString("lfname", fname);
-                                            Prefs.putString("llname", lname);
+                                            Prefs.putString("lname", name);
                                             Prefs.putString("lemail", email);
                                             Prefs.putString("lmobile", mobile);
                                             Prefs.putString("lcategory", category);
-                                            Prefs.putString("ltype", type);*/
+                                            Prefs.putString("llanguage", language);
 
                                             Intent intent = new Intent(LoginActivity.this, DirectorHomeActivity.class);
                                             ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);

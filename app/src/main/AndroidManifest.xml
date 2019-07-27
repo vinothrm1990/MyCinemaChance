@@ -16,12 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.DirectorAboutActivity"></activity>
-        <activity android:name=".activity.DirectorFeedbackActivity" />
-        <activity android:name=".activity.DirectorMemberActivity" />
-        <activity android:name=".activity.DirectorWishlistActivity" />
-        <activity android:name=".activity.DirectorPostActivity" />
-        <activity android:name=".activity.DirectorProfileActivity" />
+        <activity android:name=".activity.DirectorMemberActivity"
+            android:parentActivityName=".activity.DirectorRequestedActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".activity.DirectorAboutActivity"
+            android:parentActivityName=".activity.DirectorHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DirectorRequestedActivity"
+            android:parentActivityName=".activity.DirectorHomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.GuestAboutActivity"
             android:parentActivityName=".activity.GuestHomeActivity"
