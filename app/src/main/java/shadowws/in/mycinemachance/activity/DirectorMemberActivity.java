@@ -2,18 +2,33 @@ package shadowws.in.mycinemachance.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.forms.sti.progresslitieigb.ProgressLoadingJIGB;
+import com.pixplicity.easyprefs.library.Prefs;
 import com.tapadoo.alerter.Alerter;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,6 +51,7 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
     LinearLayout llAudio, llVideo, llPicture, llResume;
     ProgressLoadingJIGB progress;
     CircleImageView ivProfile;
+    String picture, audio, video, resume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +92,34 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
         llResume = findViewById(R.id.mem_resume_layout);
         ivProfile = findViewById(R.id.mem_iv);
 
+        member();
+
         llAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(DirectorMemberActivity.this, "audio", Toast.LENGTH_SHORT).show();
+                if (!checkNullOrEmpty(audio)){
+                    Intent intent = new Intent(DirectorMemberActivity.this, DirectorPlayerActivity.class);
+                    ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorMemberActivity.this);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mlink", video);
+                    intent.putExtras(bundle);
+                    startActivity(intent, options.toBundle());
+                }else {
+                    Alerter.create(DirectorMemberActivity.this)
+                            .setTitle("Information :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText("No Audio Available")
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorInfo)
+                            .show();
+
+                }
+
             }
         });
 
@@ -88,7 +127,27 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(DirectorMemberActivity.this, "video", Toast.LENGTH_SHORT).show();
+                if (!checkNullOrEmpty(video)){
+                    Intent intent = new Intent(DirectorMemberActivity.this, DirectorPlayerActivity.class);
+                    ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorMemberActivity.this);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mlink", video);
+                    intent.putExtras(bundle);
+                    startActivity(intent, options.toBundle());
+                }else {
+                    Alerter.create(DirectorMemberActivity.this)
+                            .setTitle("Information :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText("No Video Available")
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorInfo)
+                            .show();
+
+                }
             }
         });
 
@@ -96,7 +155,27 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(DirectorMemberActivity.this, "pic", Toast.LENGTH_SHORT).show();
+                if (!checkNullOrEmpty(picture)){
+                    Intent intent = new Intent(DirectorMemberActivity.this, DirectorPictureActivity.class);
+                    ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorMemberActivity.this);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mpicture", picture);
+                    intent.putExtras(bundle);
+                    startActivity(intent, options.toBundle());
+                }else {
+                    Alerter.create(DirectorMemberActivity.this)
+                            .setTitle("Information :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText("No Picture Available")
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorInfo)
+                            .show();
+
+                }
             }
         });
 
@@ -104,12 +183,29 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(DirectorMemberActivity.this, "cv", Toast.LENGTH_SHORT).show();
+                if (!checkNullOrEmpty(resume)){
+                    Intent intent = new Intent(DirectorMemberActivity.this, DirectorDocumentActivity.class);
+                    ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorMemberActivity.this);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mresume", resume);
+                    intent.putExtras(bundle);
+                    startActivity(intent, options.toBundle());
+                }else {
+                    Alerter.create(DirectorMemberActivity.this)
+                            .setTitle("Information :")
+                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
+                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
+                            .setText("No Bio Data Available")
+                            .setTextAppearance(R.style.AlertTextAppearance_Text)
+                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
+                            .setIcon(R.drawable.ic_info)
+                            .setIconColorFilter(0)
+                            .setBackgroundColorRes(R.color.colorInfo)
+                            .show();
+
+                }
             }
         });
-
-        member();
-
     }
 
     private void member() {
@@ -135,7 +231,13 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
         }else {
 
             Bundle bundle = getIntent().getExtras();
-            mobile = bundle.getString("mmobile");
+            if (bundle != null){
+                mobile = bundle.getString("mmobile");
+                Prefs.putString("dmmobile", mobile);
+            }else {
+                mobile =  Prefs.getString("dmmobile", null);
+            }
+
 
             if (!checkNullOrEmpty(mobile)){
 
@@ -184,13 +286,13 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
                                         String actor = results.getActor();
                                         String industry = results.getIndustry();
                                         String profile = results.getProfile();
-                                        String picture = results.getPicture();
-                                        String resume = results.getResume();
-                                        String audio = results.getAudio();
-                                        String video = results.getVideo();
                                         String achievement = results.getAchievement();
                                         String yourself = results.getYourself();
                                         String registered = results.getMemdate();
+                                        picture = results.getPicture();
+                                        resume = results.getResume();
+                                        audio = results.getAudio();
+                                        video = results.getVideo();
 
                                         tvFName.setText(fname);
                                         tvLName.setText(lname);
@@ -221,6 +323,8 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
                                                     .thumbnail(0.1f)
                                                     .into(ivProfile);
                                         }
+
+
 
                                     }else {
 
@@ -305,4 +409,5 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
     public void onConnectionChanged(boolean isConnected) {
         memberConnected(isConnected);
     }
+
 }

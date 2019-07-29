@@ -16,10 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.DirectorMemberActivity"
+        <activity
+            android:name=".activity.DirectorDocumentActivity"
+            android:parentActivityName=".activity.DirectorMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.DirectorPicturePreviewActivity" />
+        <activity android:name=".activity.DirectorPlayerActivity" />
+        <activity
+            android:name=".activity.DirectorPictureActivity"
+            android:parentActivityName=".activity.DirectorMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DirectorMemberActivity"
             android:parentActivityName=".activity.DirectorRequestedActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DirectorAboutActivity"
             android:parentActivityName=".activity.DirectorHomeActivity"

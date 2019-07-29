@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
     TextView tvDob, tvPic, tvCv, tvAudio;
     CustomEditText etName, etMobile, etEmail, etPass, etCPass, etFb, etQualify, etAddress, etState, etActor, etAudio, etVideo, etAchieve, etYourself;
     Button btnRegister;
-    ImageButton ibtnDate, ibtnPic, ibtnCv, ibtnAudio;
+    ImageButton ibtnDate, ibtnPic, ibtnCv;
     ImageView ivPicUploded, ivCvUploaded, ivAudioUploaded;
     LinearLayout professionLayout;
     Spinner spLanguage, spCategory, spProfession, spGender, spIndustry;
@@ -94,8 +94,6 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
         etActor = findViewById(R.id.reg_et_actor);
         tvPic = findViewById(R.id.reg_tv_pic);
         tvCv = findViewById(R.id.reg_tv_cv);
-        ibtnAudio = findViewById(R.id.reg_upload_audio);
-        ivAudioUploaded = findViewById(R.id.reg_uploaded_audio);
         etAchieve = findViewById(R.id.reg_et_achieve);
         etYourself = findViewById(R.id.reg_et_yourself);
         tvClick = findViewById(R.id.reg_tv_click);
@@ -112,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
         ibtnCv = findViewById(R.id.reg_upload_cv);
         ivPicUploded = findViewById(R.id.reg_uploaded_pic);
         ivCvUploaded = findViewById(R.id.reg_uploaded_cv);
-        tvAudio = findViewById(R.id.reg_tv_audio);
+        etAudio = findViewById(R.id.reg_et_audio);
         etVideo = findViewById(R.id.reg_et_video);
 
         languageList = new ArrayList<>();
@@ -301,13 +299,6 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
             }
         });
 
-        ibtnAudio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                audio();
-            }
-        });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -378,9 +369,9 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
                             }else {
                                 bPath = "null";
                             }
-                            String audio = tvAudio.getText().toString().trim();
+                            String audio = etAudio.getText().toString().trim();
                             if (audio.length() > 0){
-                                aPath = tvAudio.getText().toString().trim();
+                                aPath = etAudio.getText().toString().trim();
                             }else {
                                 aPath = "null";
                             }
@@ -828,31 +819,6 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
         }
     }
 
-    private void audioConnected(boolean isConnected) {
-
-        if (!isConnected){
-
-            Alerter.create(RegisterActivity.this)
-                    .setTitle("Connection Error :")
-                    .setTitleAppearance(R.style.AlertTextAppearance_Title)
-                    .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                    .setText("No Internet Connection Available")
-                    .setTextAppearance(R.style.AlertTextAppearance_Text)
-                    .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
-                    .setIcon(R.drawable.no_internet)
-                    .setIconColorFilter(0)
-                    .setBackgroundColorRes(R.color.colorWarning)
-                    .show();
-
-        }else {
-
-            Intent intent = new Intent();
-            intent.setType("audio/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, ""), AUDIO_REQUEST);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -878,15 +844,6 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
 
                 uploadResume(filePath);
 
-            }else if (requestCode == AUDIO_REQUEST && resultCode == RESULT_OK && null != data){
-
-                Uri selectedAudio = data.getData();
-                filePath = FilePath.getPath(this, selectedAudio);
-                audioPath = filePath.substring(filePath.lastIndexOf("/")+1);
-                tvAudio.setText(audioPath);
-                tvAudio.setSelected(true);
-
-                uploadAudio(filePath);
             }
 
         }catch (Exception e){
@@ -1157,131 +1114,6 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
         });
     }
 
-    private void uploadAudio(String filePath) {
-
-        File file = new File(filePath);
-
-        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-
-        progress.startLoadingJIGB(RegisterActivity.this, R.raw.progress, "Please Wait...", 0,500,300);
-
-        RetrofitAPI api = RetrofitBASE.getRetrofitInstance(RegisterActivity.this).create(RetrofitAPI.class);
-        Call<UploadResponse> call = api.uploadFile(fileToUpload, filename);
-
-        call.enqueue(new Callback<UploadResponse>() {
-            @Override
-            public void onResponse(Call<UploadResponse> call, Response<UploadResponse> response) {
-
-                try {
-
-                    if (response.isSuccessful()){
-
-                        UploadResponse data = response.body();
-
-                        if (data != null){
-
-                            boolean error = data.getError();
-                            String message = data.getMessage();
-
-                            if (error == false){
-
-                                progress.finishLoadingJIGB(RegisterActivity.this);
-                                Alerter.create(RegisterActivity.this)
-                                        .setTitle("Response Success :")
-                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
-                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                                        .setText(message)
-                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
-                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
-                                        .setIcon(R.drawable.ic_info)
-                                        .setIconColorFilter(0)
-                                        .setBackgroundColorRes(R.color.colorSuccess)
-                                        .show();
-
-                                ibtnAudio.setVisibility(View.GONE);
-                                ivAudioUploaded.setVisibility(View.VISIBLE);
-
-                            }else {
-
-                                progress.finishLoadingJIGB(RegisterActivity.this);
-                                Alerter.create(RegisterActivity.this)
-                                        .setTitle("Response Error :")
-                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
-                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                                        .setText(message)
-                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
-                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
-                                        .setIcon(R.drawable.ic_info)
-                                        .setIconColorFilter(0)
-                                        .setBackgroundColorRes(R.color.colorError)
-                                        .show();
-                            }
-
-                        }else {
-
-                            progress.finishLoadingJIGB(RegisterActivity.this);
-                            Alerter.create(RegisterActivity.this)
-                                    .setTitle("Null Exception :")
-                                    .setTitleAppearance(R.style.AlertTextAppearance_Title)
-                                    .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                                    .setText("No Data")
-                                    .setTextAppearance(R.style.AlertTextAppearance_Text)
-                                    .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
-                                    .setIcon(R.drawable.ic_info)
-                                    .setIconColorFilter(0)
-                                    .setBackgroundColorRes(R.color.colorError)
-                                    .show();
-                        }
-                    }
-
-                }catch (Exception e){
-
-                    progress.finishLoadingJIGB(RegisterActivity.this);
-                    Alerter.create(RegisterActivity.this)
-                            .setTitle("Exception Caught :")
-                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
-                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                            .setText(e.toString())
-                            .setTextAppearance(R.style.AlertTextAppearance_Text)
-                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
-                            .setIcon(R.drawable.ic_info)
-                            .setIconColorFilter(0)
-                            .setBackgroundColorRes(R.color.colorError)
-                            .show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UploadResponse> call, Throwable t) {
-
-                if (t.getMessage().equalsIgnoreCase("connect timed out")){
-
-                    progress.finishLoadingJIGB(RegisterActivity.this);
-                    call.cancel();
-                    uploadAudio(filePath);
-
-                }else {
-
-                    progress.finishLoadingJIGB(RegisterActivity.this);
-                    call.cancel();
-                    Alerter.create(RegisterActivity.this)
-                            .setTitle("Exception Throwed :")
-                            .setTitleAppearance(R.style.AlertTextAppearance_Title)
-                            .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                            .setText(t.toString())
-                            .setTextAppearance(R.style.AlertTextAppearance_Text)
-                            .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
-                            .setIcon(R.drawable.ic_info)
-                            .setIconColorFilter(0)
-                            .setBackgroundColorRes(R.color.colorError)
-                            .show();
-                }
-
-            }
-        });
-    }
 
     private void picture() {
         boolean isConnected = Connection.isConnected();
@@ -1291,11 +1123,6 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
     private void resume() {
         boolean isConnected = Connection.isConnected();
         resumeConnected(isConnected);
-    }
-
-    private void audio() {
-        boolean isConnected = Connection.isConnected();
-        audioConnected(isConnected);
     }
 
     private void register() {
@@ -1313,7 +1140,6 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
     public void onConnectionChanged(boolean isConnected) {
         pictureConnected(isConnected);
         resumeConnected(isConnected);
-        audioConnected(isConnected);
         registerConnected(isConnected);
     }
 

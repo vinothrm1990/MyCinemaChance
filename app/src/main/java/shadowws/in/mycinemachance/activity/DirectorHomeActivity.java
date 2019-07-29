@@ -11,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.SubMenu;
 import android.view.View;
 
@@ -454,12 +455,32 @@ public class DirectorHomeActivity extends AppCompatActivity
             ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorHomeActivity.this);
             startActivity(intent, options.toBundle());
         }else if (id == R.id.nav_exit){
-            //logoutDialog();
+            logout();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+
+        View view = getLayoutInflater().inflate(R.layout.logout_dialog, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(view);
+        Button btnYes = dialog.findViewById(R.id.logout_btn);
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Prefs.clear();
+                Intent intent = new Intent(DirectorHomeActivity.this, LoginActivity.class);
+                ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorHomeActivity.this);
+                startActivity(intent, options.toBundle());
+            }
+        });
+        dialog.show();
     }
 
     private void changePassword() {

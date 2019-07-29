@@ -794,49 +794,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <LinearLayout
+                <com.libizo.CustomEditText
+                    android:hint="Paste URL Link"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:autoLink="web"
+                    android:imeOptions="actionNext"
                     android:layout_margin="5dp"
-                    android:background="@drawable/round_spinner"
-                    android:weightSum="2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_weight="0.3"
-                        android:id="@+id/reg_tv_audio"
-                        android:textSize="16sp"
-                        android:layout_margin="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:textColor="#000000"
-                        android:fontFamily="@font/sans_regular"
-                        android:singleLine="true"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:freezesText="true"/>
-                    <ImageButton
-                        android:layout_gravity="center"
-                        android:id="@+id/reg_upload_audio"
-                        android:layout_weight="1.7"
-                        android:background="@null"
-                        android:src="@drawable/ic_upload"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp" />
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:id="@+id/reg_uploaded_audio"
-                        android:visibility="gone"
-                        android:src="@drawable/ic_uploaded"
-                        android:layout_weight="1.7"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp" />
-
-                </LinearLayout>
+                    android:layout_height="45dp"
+                    android:inputType="text"
+                    app:libIZO_setFont="@string/s_regular"
+                    android:id="@+id/reg_et_audio"
+                    android:textColor="#000000"
+                    app:libIZO_clearIconTint="#000000"
+                    app:libIZO_setBorderColor="#50000000"
+                    app:libIZO_setBorderView="true"
+                    app:libIZO_setClearIconVisible="true"
+                    app:libIZO_setCornerRadius="50dp"
+                    app:libIZO_setStrokeWidth="2dp"/>
 
             </LinearLayout>
 
@@ -859,6 +835,7 @@
                     android:layout_height="wrap_content" />
 
                 <com.libizo.CustomEditText
+                    android:hint="Paste URL Link"
                     android:padding="10dp"
                     android:textSize="16sp"
                     android:autoLink="web"
@@ -935,7 +912,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <com.libizo.CustomEditText
-                    android:drawableEnd="@drawable/ic_upload"
                     android:padding="10dp"
                     android:textSize="16sp"
                     android:imeOptions="actionDone"
