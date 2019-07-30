@@ -102,7 +102,7 @@ public class DirectorMemberActivity extends AppCompatActivity implements Connect
                     Intent intent = new Intent(DirectorMemberActivity.this, DirectorPlayerActivity.class);
                     ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorMemberActivity.this);
                     Bundle bundle = new Bundle();
-                    bundle.putString("mlink", video);
+                    bundle.putString("mlink", audio);
                     intent.putExtras(bundle);
                     startActivity(intent, options.toBundle());
                 }else {

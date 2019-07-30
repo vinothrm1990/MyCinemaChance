@@ -599,6 +599,10 @@ public class RegisterActivity extends AppCompatActivity implements Connection.Re
                     String language = spLanguage.getSelectedItem().toString().trim();
                     String category = spCategory.getSelectedItem().toString().trim();
 
+                    if (category.equalsIgnoreCase("Music Director")){
+                        category = "Music_Director";
+                    }
+
                     if (cpass.matches(pass)){
 
                         if (cbTerm.isChecked()){

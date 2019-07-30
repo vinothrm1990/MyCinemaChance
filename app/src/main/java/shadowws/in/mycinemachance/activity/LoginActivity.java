@@ -192,14 +192,14 @@ public class LoginActivity extends AppCompatActivity implements Connection.Recei
                                             String category = results.getCategory();
                                             String type = results.getType();
 
-                                            /*Prefs.putBoolean("memberLoggedIn", true);
+                                            Prefs.putBoolean("memberLoggedIn", true);
                                             Prefs.putInt("lid", id);
                                             Prefs.putString("lfname", fname);
                                             Prefs.putString("llname", lname);
                                             Prefs.putString("lemail", email);
                                             Prefs.putString("lmobile", mobile);
                                             Prefs.putString("lcategory", category);
-                                            Prefs.putString("ltype", type);*/
+                                            Prefs.putString("ltype", type);
 
                                             Intent intent = new Intent(LoginActivity.this, MemberHomeActivity.class);
                                             ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);

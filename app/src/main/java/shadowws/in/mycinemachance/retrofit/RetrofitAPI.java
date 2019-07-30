@@ -18,6 +18,14 @@ import shadowws.in.mycinemachance.response.DirectorPostResponse;
 import shadowws.in.mycinemachance.response.DirectorRegisterResponse;
 import shadowws.in.mycinemachance.response.GuestCategoryResponse;
 import shadowws.in.mycinemachance.response.GuestDataResponse;
+import shadowws.in.mycinemachance.response.MemberDataResponse;
+import shadowws.in.mycinemachance.response.MemberInterviewResponse;
+import shadowws.in.mycinemachance.response.MemberLookResponse;
+import shadowws.in.mycinemachance.response.MemberPasswordResponse;
+import shadowws.in.mycinemachance.response.MemberProfileResponse;
+import shadowws.in.mycinemachance.response.MemberRatingResponse;
+import shadowws.in.mycinemachance.response.MemberTrailerResponse;
+import shadowws.in.mycinemachance.response.MemberWantedResponse;
 import shadowws.in.mycinemachance.response.MemberLoginResponse;
 import shadowws.in.mycinemachance.response.MemberRegisterResponse;
 import shadowws.in.mycinemachance.response.UploadResponse;
@@ -128,6 +136,38 @@ public interface RetrofitAPI {
     @FormUrlEncoded
     @POST("requestedmember")
     Call<DirectorMemberResponse> requestedMember(
+            @Field("mobile") String mobile
+    );
+
+    @GET("allwanted")
+    Call<MemberWantedResponse> memberWanted();
+
+    @GET("memberdata")
+    Call<MemberDataResponse> memberData();
+
+    @GET("membertrailer")
+    Call<MemberTrailerResponse> memberTrailer();
+
+    @GET("memberrating")
+    Call<MemberRatingResponse> memberRating();
+
+    @GET("memberlook")
+    Call<MemberLookResponse> memberLook();
+
+    @GET("memberinterview")
+    Call<MemberInterviewResponse> memberInterview();
+
+    @FormUrlEncoded
+    @POST("updatepassword")
+    Call<MemberPasswordResponse> updateMemberPassword(
+            @Field("currentpassword") String currentpassword,
+            @Field("newpassword") String newpassword,
+            @Field("mobile") String mobile
+    );
+
+    @FormUrlEncoded
+    @POST("memberprofile")
+    Call<MemberProfileResponse> memberProfile(
             @Field("mobile") String mobile
     );
 }

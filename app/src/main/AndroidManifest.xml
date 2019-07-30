@@ -16,12 +16,49 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.MemberProfileActivity"
+            android:parentActivityName=".activity.MemberHomeActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.MemberAboutActivity"
+            android:parentActivityName=".activity.MemberHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MemberPlayerActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.MemberInterviewActivity"
+            android:parentActivityName=".activity.MemberHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MemberLookActivity"
+            android:parentActivityName=".activity.MemberHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MemberRatingActivity"
+            android:parentActivityName=".activity.MemberHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MemberTrailerActivity"
+            android:parentActivityName=".activity.MemberHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MemberWantedActivity"
+            android:parentActivityName=".activity.MemberHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DirectorPlayerPreviewActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.DirectorDocumentActivity"
             android:parentActivityName=".activity.DirectorMemberActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.DirectorPicturePreviewActivity" />
-        <activity android:name=".activity.DirectorPlayerActivity" />
+        <activity
+            android:name=".activity.DirectorPlayerActivity"
+            android:parentActivityName=".activity.DirectorMemberActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DirectorPictureActivity"
             android:parentActivityName=".activity.DirectorMemberActivity"

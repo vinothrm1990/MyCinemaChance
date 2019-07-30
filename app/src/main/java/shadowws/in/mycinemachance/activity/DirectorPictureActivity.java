@@ -93,11 +93,7 @@ public class DirectorPictureActivity extends AppCompatActivity implements Connec
                 directorPictureAdapter = new DirectorPictureAdapter(DirectorPictureActivity.this, listOfString);
                 rvPicture.setAdapter(directorPictureAdapter);
 
-
             }
-
-
-
         }
     }
 

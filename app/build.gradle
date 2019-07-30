@@ -48,5 +48,7 @@ dependencies {
     implementation 'com.codesgood:justifiedtextview:1.1.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
-
+    implementation 'com.github.therealshabi:AutoImageFlipper:1.5.6'
+    implementation 'com.github.demoNo:AutoScrollViewPager:v1.0.2'
+    implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
 }

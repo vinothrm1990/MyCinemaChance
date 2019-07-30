@@ -478,6 +478,7 @@ public class DirectorHomeActivity extends AppCompatActivity
                 Intent intent = new Intent(DirectorHomeActivity.this, LoginActivity.class);
                 ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(DirectorHomeActivity.this);
                 startActivity(intent, options.toBundle());
+                finish();
             }
         });
         dialog.show();

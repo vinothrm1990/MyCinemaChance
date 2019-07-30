@@ -1,11 +1,15 @@
 package shadowws.in.mycinemachance.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -14,27 +18,47 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.tapadoo.alerter.Alerter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import shadowws.in.mycinemachance.R;
+import shadowws.in.mycinemachance.adapter.DirectorPictureAdapter;
+import shadowws.in.mycinemachance.adapter.DirectorPlayerAdapter;
 import shadowws.in.mycinemachance.other.Connection;
 
-public class DirectorPlayerActivity extends YouTubeBaseActivity implements Connection.Receiver {
+public class DirectorPlayerActivity extends AppCompatActivity implements Connection.Receiver {
 
-    public static String YOUTUBE_API_KEY = "AIzaSyDHqIJqS8GB8wwtqA6EVQqVOItineBy2zY";
-    YouTubePlayerView youTubePlayerView;
-    static String audio;
+    RecyclerView rvPlayer;
+    RecyclerView.LayoutManager layoutManager;
+    DirectorPlayerAdapter directorPlayerAdapter;
+    String player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_director_player);
 
-        youTubePlayerView = findViewById(R.id.youtubePlayer);
+        TextView title = new TextView(getApplicationContext());
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        title.setLayoutParams(layoutParams);
+        title.setText("PLAYLISTS");
+        title.setTextSize(18);
+        title.setTextColor(Color.parseColor("#FFFFFF"));
+        final Typeface font = Typeface.createFromAsset(getAssets(), "sans_bold.ttf");
+        title.setTypeface(font);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setCustomView(title);
 
-        Bundle bundle = getIntent().getExtras();
-        audio = bundle.getString("mlink");
+        rvPlayer = findViewById(R.id.rv_player);
+
+        layoutManager = new GridLayoutManager(this, 2);
+        rvPlayer.setHasFixedSize(true);
+        rvPlayer.setNestedScrollingEnabled(false);
+        rvPlayer.setLayoutManager(layoutManager);
 
         player();
     }
@@ -58,59 +82,29 @@ public class DirectorPlayerActivity extends YouTubeBaseActivity implements Conne
         }else {
 
             Bundle bundle = getIntent().getExtras();
-            audio = bundle.getString("mlink");
+            player = bundle.getString("mlink");
 
-            if (!checkNullOrEmpty(audio)){
+            if (player.contains(",")){
 
-                youTubePlayerView.initialize(YOUTUBE_API_KEY,
-                        new YouTubePlayer.OnInitializedListener() {
-                            @Override
-                            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                String[] elements = player.split(",");
+                List<String> fixedLenghtList = Arrays.asList(elements);
+                ArrayList<String> listOfString = new ArrayList<String>(fixedLenghtList);
 
-                                youTubePlayer.cueVideo(getYoutubeVideoId(audio));
-                                youTubePlayer.setFullscreen(true);
-                            }
+                directorPlayerAdapter = new DirectorPlayerAdapter(DirectorPlayerActivity.this, listOfString);
+                rvPlayer.setAdapter(directorPlayerAdapter);
 
-                            @Override
-                            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult error) {
+            }else {
 
-                                String errorMessage = error.toString();
-                                Alerter.create(DirectorPlayerActivity.this)
-                                        .setTitle("Player Error :")
-                                        .setTitleAppearance(R.style.AlertTextAppearance_Title)
-                                        .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                                        .setText(errorMessage)
-                                        .setTextAppearance(R.style.AlertTextAppearance_Text)
-                                        .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
-                                        .setIcon(R.drawable.no_internet)
-                                        .setIconColorFilter(0)
-                                        .setBackgroundColorRes(R.color.colorWarning)
-                                        .show();
-                            }
-                        });
+                ArrayList<String> listOfString = new ArrayList<String>();
+                listOfString.add(player);
+
+                directorPlayerAdapter = new DirectorPlayerAdapter(DirectorPlayerActivity.this, listOfString);
+                rvPlayer.setAdapter(directorPlayerAdapter);
             }
+
         }
     }
 
-    public static String getYoutubeVideoId(String youtubeUrl) {
-
-        String video_id = audio;
-        if (youtubeUrl != null && youtubeUrl.trim().length() > 0 && youtubeUrl.startsWith("https"))
-        {
-
-            String expression = "^.*((youtu.be"+ "\\/)" + "|(v\\/)|(\\/u\\/w\\/)|(embed\\/)|(watch\\?))\\??v?=?([^#\\&\\?]*).*"; // var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-            CharSequence input = youtubeUrl;
-            Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(input);
-            if (matcher.matches())
-            {
-                String groupIndex1 = matcher.group(7);
-                if(groupIndex1!=null && groupIndex1.length()==11)
-                    video_id = groupIndex1;
-            }
-        }
-        return video_id;
-    }
 
     private void player() {
         boolean isConnected = Connection.isConnected();
