@@ -31,7 +31,7 @@ public class MemberLoginResponse {
 
         @SerializedName("id")
         @Expose
-        private Integer id;
+        private String id;
         @SerializedName("fname")
         @Expose
         private String fname;
@@ -50,8 +50,11 @@ public class MemberLoginResponse {
         @SerializedName("type")
         @Expose
         private String type;
+        @SerializedName("profile")
+        @Expose
+        private String profile;
 
-        public Integer getId() {
+        public String getId() {
             return id;
         }
 
@@ -77,6 +80,10 @@ public class MemberLoginResponse {
 
         public String getType() {
             return type;
+        }
+
+        public String getProfile() {
+            return profile;
         }
     }
 }

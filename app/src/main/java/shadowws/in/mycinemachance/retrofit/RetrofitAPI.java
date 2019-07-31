@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import shadowws.in.mycinemachance.response.DirectorDataResponse;
 import shadowws.in.mycinemachance.response.DirectorLoginResponse;
 import shadowws.in.mycinemachance.response.DirectorMemberResponse;
@@ -25,6 +26,7 @@ import shadowws.in.mycinemachance.response.MemberPasswordResponse;
 import shadowws.in.mycinemachance.response.MemberProfileResponse;
 import shadowws.in.mycinemachance.response.MemberRatingResponse;
 import shadowws.in.mycinemachance.response.MemberTrailerResponse;
+import shadowws.in.mycinemachance.response.MemberUpdateResponse;
 import shadowws.in.mycinemachance.response.MemberWantedResponse;
 import shadowws.in.mycinemachance.response.MemberLoginResponse;
 import shadowws.in.mycinemachance.response.MemberRegisterResponse;
@@ -100,12 +102,6 @@ public interface RetrofitAPI {
     );
 
     @FormUrlEncoded
-    @POST("allmembers")
-    Call<DirectorDataResponse> directorData(
-            @Field("page") int page
-    );
-
-    @FormUrlEncoded
     @POST("createpost")
     Call<DirectorPostResponse> directorPost(
             @Field("name") String name,
@@ -169,5 +165,45 @@ public interface RetrofitAPI {
     @POST("memberprofile")
     Call<MemberProfileResponse> memberProfile(
             @Field("mobile") String mobile
+    );
+
+    @FormUrlEncoded
+    @POST("updatemember")
+    Call<MemberUpdateResponse> memberUpdate(
+            @Field("name") String name,
+            @Field("mobile") String mobile,
+            @Field("email") String email,
+            @Field("language") String language,
+            @Field("profession") String profession,
+            @Field("fb") String fb,
+            @Field("dob") String dob,
+            @Field("gender") String gender,
+            @Field("qualification") String qualification,
+            @Field("address") String address,
+            @Field("state") String state,
+            @Field("actor") String actor,
+            @Field("industry") String industry,
+            @Field("picture") String picture,
+            @Field("resume") String resume,
+            @Field("audio") String audio,
+            @Field("video") String video,
+            @Field("achievement") String achievement,
+            @Field("yourself") String yourself
+    );
+
+    @FormUrlEncoded
+    @POST("uploadmedia")
+    Call<UploadResponse> uploadMedia(
+            @Field("mobile") String mobile,
+            @Field("url") String url,
+            @Field("type") String type
+    );
+
+    @Multipart
+    @POST("uploadpic")
+    Call<UploadResponse> uploadPicture(
+            @Part MultipartBody.Part file,
+            @Part("file") RequestBody name,
+             @Part("mobile") RequestBody mobile
     );
 }

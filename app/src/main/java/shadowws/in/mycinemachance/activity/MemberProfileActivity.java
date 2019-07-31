@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.forms.sti.progresslitieigb.ProgressLoadingJIGB;
 import com.libizo.CustomEditText;
 import com.pixplicity.easyprefs.library.Prefs;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -43,8 +45,10 @@ import retrofit2.Response;
 import shadowws.in.mycinemachance.R;
 import shadowws.in.mycinemachance.other.Connection;
 import shadowws.in.mycinemachance.other.FilePath;
+import shadowws.in.mycinemachance.response.MemberLoginResponse;
 import shadowws.in.mycinemachance.response.MemberProfileResponse;
 import shadowws.in.mycinemachance.response.MemberRegisterResponse;
+import shadowws.in.mycinemachance.response.MemberUpdateResponse;
 import shadowws.in.mycinemachance.response.UploadResponse;
 import shadowws.in.mycinemachance.retrofit.RetrofitAPI;
 import shadowws.in.mycinemachance.retrofit.RetrofitBASE;
@@ -53,7 +57,7 @@ import thebat.lib.validutil.ValidUtils;
 public class MemberProfileActivity extends AppCompatActivity implements Connection.Receiver {
 
     TextView tvDob, tvPic, tvCv;
-    CustomEditText etName, etMobile, etEmail, etPass, etCPass, etFb, etQualify, etAddress, etState, etActor, etAudio, etVideo, etAchieve, etYourself;
+    CustomEditText etName, etMobile, etEmail, etFb, etQualify, etAddress, etState, etActor, etAudio, etVideo, etAchieve, etYourself;
     Button btnUpdate;
     ImageButton ibtnDate, ibtnPic, ibtnCv;
     ImageView ivPicUploded, ivCvUploaded;
@@ -68,6 +72,7 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
     String aPath, vPath, bPath, pPath, fbData, actorData, achieveData, yourselfData;
     ArrayList<String> languageList, professionList, genderList, industryList;
     String picture, audio, video, resume;
+    CircleImageView civProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +118,7 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
         ivCvUploaded = findViewById(R.id.mem_uploaded_cv);
         etAudio = findViewById(R.id.mem_et_audio);
         etVideo = findViewById(R.id.mem_et_video);
+        civProfile = findViewById(R.id.mem_prof_iv);
 
         profile();
 
@@ -368,6 +374,13 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
                                     etYourself.setText(yourself);
                                     etAchieve.setText(achievement);
 
+
+                                    Glide.with(MemberProfileActivity.this)
+                                            .load("http://mycinemachance.com/upload/"+profile)
+                                            .thumbnail(0.1f)
+                                            .placeholder(R.drawable.preview_image)
+                                            .into(civProfile);
+
                                     ArrayAdapter genderAdapter = (ArrayAdapter) spGender.getAdapter();
                                     int spinnerPosition1 = genderAdapter.getPosition(gender);
                                     spGender.setSelection(spinnerPosition1);
@@ -381,7 +394,7 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
                                     spProfession.setSelection(spinnerPosition3);
 
                                     ArrayAdapter industryAdapter = (ArrayAdapter) spIndustry.getAdapter();
-                                    int spinnerPosition4 = industryAdapter.getPosition(profession);
+                                    int spinnerPosition4 = industryAdapter.getPosition(industry);
                                     spIndustry.setSelection(spinnerPosition4);
 
 
@@ -476,14 +489,12 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
 
         }else {
 
-            if (validUtils.validateEditTexts(etName, etMobile, etEmail, etPass, etCPass,
+            if (validUtils.validateEditTexts(etName, etMobile, etEmail,
                     etQualify, etAddress, etState)){
 
                 String name = etName.getText().toString().trim();
                 String email = etEmail.getText().toString().trim();
                 String mobile = etMobile.getText().toString().trim();
-                String pass = etPass.getText().toString().trim();
-                String cpass = etCPass.getText().toString().trim();
                 String dob = tvDob.getText().toString().trim();
                 String qualify = etQualify.getText().toString().trim();
                 String address = etAddress.getText().toString().trim();
@@ -544,21 +555,23 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
                 String gender = spGender.getSelectedItem().toString().trim();
                 String industry = spIndustry.getSelectedItem().toString().trim();
 
-                progress.startLoadingJIGB(MemberProfileActivity.this, R.raw.progress, "Please Wait...", 0,500,300);
+                progress.startLoadingJIGB(MemberProfileActivity.this,
+                        R.raw.progress, "Please Wait...",
+                        0,500,300);
 
-                /*RetrofitAPI api = RetrofitBASE.getRetrofitInstance(MemberProfileActivity.this).create(RetrofitAPI.class);
-                Call<MemberRegisterResponse> call = api.memberRegister(name, mobile, email, language, profession, fbData, dob, gender,
+                RetrofitAPI api = RetrofitBASE.getRetrofitInstance(MemberProfileActivity.this).create(RetrofitAPI.class);
+                Call<MemberUpdateResponse> call = api.memberUpdate(name, mobile, email, language, profession, fbData, dob, gender,
                         qualify, address, state, actorData, industry, pPath, bPath, aPath, vPath, achieveData, yourselfData);
 
-                call.enqueue(new Callback<MemberRegisterResponse>() {
+                call.enqueue(new Callback<MemberUpdateResponse>() {
                     @Override
-                    public void onResponse(Call<MemberRegisterResponse> call, Response<MemberRegisterResponse> response) {
+                    public void onResponse(Call<MemberUpdateResponse> call, Response<MemberUpdateResponse> response) {
 
                         try {
 
                             if (response.isSuccessful()){
 
-                                MemberRegisterResponse data = response.body();
+                                MemberUpdateResponse data = response.body();
 
                                 if (data != null){
 
@@ -581,15 +594,31 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
                                                 .setBackgroundColorRes(R.color.colorSuccess)
                                                 .show();
 
-                                        Prefs.putString("rmobile", mobile);
-                                        Prefs.putString("rpassword", cpass);
+                                        MemberUpdateResponse.User results = data.getUser();
+
+                                        String id = results.getId();
+                                        String fname = results.getFname();
+                                        String lname = results.getLname();
+                                        String email = results.getEmail();
+                                        String mobile = results.getMobile();
+                                        String category = results.getCategory();
+                                        String profile = results.getProfile();
+
+                                        Prefs.putString("lid", id);
+                                        Prefs.putString("lfname", fname);
+                                        Prefs.putString("llname", lname);
+                                        Prefs.putString("lemail", email);
+                                        Prefs.putString("lmobile", mobile);
+                                        Prefs.putString("lcategory", category);
+                                        Prefs.putString("lprofile", profile);
 
                                         new Handler().postDelayed(new Runnable() {
 
                                             @Override
                                             public void run() {
                                                 // This method will be executed once the timer is over
-
+                                                finish();
+                                                startActivity(getIntent());
                                             }
                                         }, 1500);
 
@@ -645,7 +674,7 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
                     }
 
                     @Override
-                    public void onFailure(Call<MemberRegisterResponse> call, Throwable t) {
+                    public void onFailure(Call<MemberUpdateResponse> call, Throwable t) {
 
                         call.cancel();
                         progress.finishLoadingJIGB(MemberProfileActivity.this);
@@ -662,7 +691,7 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
                                 .show();
 
                     }
-                });*/
+                });
 
             }else {
 
@@ -761,10 +790,10 @@ public class MemberProfileActivity extends AppCompatActivity implements Connecti
         }catch (Exception e){
 
             Alerter.create(MemberProfileActivity.this)
-                    .setTitle("Connection Error :")
+                    .setTitle("Exception Error :")
                     .setTitleAppearance(R.style.AlertTextAppearance_Title)
                     .setTitleTypeface(Typeface.createFromAsset(getAssets(), "sans_bold.ttf"))
-                    .setText(e.getMessage())
+                    .setText(e.toString())
                     .setTextAppearance(R.style.AlertTextAppearance_Text)
                     .setTextTypeface(Typeface.createFromAsset(getAssets(), "sans_regular.ttf"))
                     .setIcon(R.drawable.ic_info)

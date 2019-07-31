@@ -184,22 +184,24 @@ public class LoginActivity extends AppCompatActivity implements Connection.Recei
 
                                             MemberLoginResponse.User results = data.getUser();
 
-                                            int id = results.getId();
+                                            String id = results.getId();
                                             String fname = results.getFname();
                                             String lname = results.getLname();
                                             String email = results.getEmail();
                                             String mobile = results.getMobile();
                                             String category = results.getCategory();
                                             String type = results.getType();
+                                            String profile = results.getProfile();
 
                                             Prefs.putBoolean("memberLoggedIn", true);
-                                            Prefs.putInt("lid", id);
+                                            Prefs.putString("lid", id);
                                             Prefs.putString("lfname", fname);
                                             Prefs.putString("llname", lname);
                                             Prefs.putString("lemail", email);
                                             Prefs.putString("lmobile", mobile);
                                             Prefs.putString("lcategory", category);
                                             Prefs.putString("ltype", type);
+                                            Prefs.putString("lprofile", profile);
 
                                             Intent intent = new Intent(LoginActivity.this, MemberHomeActivity.class);
                                             ActivityOptionsCompat options  = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
@@ -302,7 +304,7 @@ public class LoginActivity extends AppCompatActivity implements Connection.Recei
 
                                             DirectorLoginResponse.User results = data.getUser();
 
-                                            int id = results.getId();
+                                            String id = results.getId();
                                             String name = results.getName();
                                             String email = results.getEmail();
                                             String mobile = results.getMobile();
@@ -310,7 +312,7 @@ public class LoginActivity extends AppCompatActivity implements Connection.Recei
                                             String language = results.getLanguage();
 
                                             Prefs.putBoolean("directorLoggedIn", true);
-                                            Prefs.putInt("lid", id);
+                                            Prefs.putString("lid", id);
                                             Prefs.putString("lname", name);
                                             Prefs.putString("lemail", email);
                                             Prefs.putString("lmobile", mobile);

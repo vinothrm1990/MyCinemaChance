@@ -98,6 +98,12 @@ public class MemberProfileResponse {
         @SerializedName("yourself")
         @Expose
         private String yourself;
+        @SerializedName("allaudio")
+        @Expose
+        private String allaudio;
+        @SerializedName("allvideo")
+        @Expose
+        private String allvideo;
 
         public String getId() {
             return id;
@@ -189,6 +195,14 @@ public class MemberProfileResponse {
 
         public String getYourself() {
             return yourself;
+        }
+
+        public String getAllaudio() {
+            return allaudio;
+        }
+
+        public String getAllvideo() {
+            return allvideo;
         }
     }
 }

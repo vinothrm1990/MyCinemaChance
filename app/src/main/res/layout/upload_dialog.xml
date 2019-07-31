@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Spinner
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:padding="10dp"
+        android:id="@+id/upload_spin_media"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/upload_url_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upload_spin_media">
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="left"
+            android:textSize="15sp"
+            android:fontFamily="@font/sans_regular"
+            android:textColor="#000000"
+            android:text="Enter URL :"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <com.libizo.CustomEditText
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:imeOptions="actionDone"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="top|left"
+            android:inputType="textUri"
+            android:hint="Paste URL Link"
+            app:libIZO_setFont="@string/s_regular"
+            android:id="@+id/upload_et_url"
+            android:textColor="#000000"
+            app:libIZO_clearIconTint="#000000"
+            app:libIZO_setBorderColor="#50000000"
+            app:libIZO_setBorderView="true"
+            app:libIZO_setClearIconVisible="true"
+            app:libIZO_setCornerRadius="50dp"
+            app:libIZO_setStrokeWidth="2dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upload_url_layout"
+        app:layout_constraintVertical_bias="0.0">
+        <Button
+            android:id="@+id/upload_btn_upload"
+            android:textColor="#FFFFFF"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:fontFamily="@font/sans_bold"
+            android:layout_weight="1"
+            android:text="Upload"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

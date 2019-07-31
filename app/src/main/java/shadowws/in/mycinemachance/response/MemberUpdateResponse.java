@@ -3,7 +3,7 @@ package shadowws.in.mycinemachance.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DirectorLoginResponse {
+public class MemberUpdateResponse {
 
     @SerializedName("error")
     @Expose
@@ -31,29 +31,39 @@ public class DirectorLoginResponse {
 
         @SerializedName("id")
         @Expose
-        private String  id;
-        @SerializedName("name")
+        private String id;
+        @SerializedName("fname")
         @Expose
-        private String name;
+        private String fname;
+        @SerializedName("lname")
+        @Expose
+        private String lname;
         @SerializedName("email")
         @Expose
         private String email;
         @SerializedName("mobile")
         @Expose
         private String mobile;
-        @SerializedName("language")
-        @Expose
-        private String language;
         @SerializedName("category")
         @Expose
         private String category;
+        @SerializedName("type")
+        @Expose
+        private String type;
+        @SerializedName("profile")
+        @Expose
+        private String profile;
 
-        public String  getId() {
+        public String getId() {
             return id;
         }
 
-        public String getName() {
-            return name;
+        public String getFname() {
+            return fname;
+        }
+
+        public String getLname() {
+            return lname;
         }
 
         public String getEmail() {
@@ -64,12 +74,16 @@ public class DirectorLoginResponse {
             return mobile;
         }
 
-        public String getLanguage() {
-            return language;
-        }
-
         public String getCategory() {
             return category;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getProfile() {
+            return profile;
         }
     }
 }

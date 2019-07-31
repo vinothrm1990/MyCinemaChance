@@ -33,6 +33,7 @@
                 app:srcCompat="@drawable/profile_logo" />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/mem_prof_edit_btn"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -959,17 +960,17 @@
 
         <Button
             android:id="@+id/mem_update_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="80dp"
             android:layout_marginBottom="20dp"
-            android:text="Update"
-            android:textSize="16sp"
-            android:fontFamily="@font/sans_bold"
-            android:textColor="#FFFFFF"
             android:background="@drawable/round_colored_btn"
+            android:fontFamily="@font/sans_bold"
+            android:text="Update"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
